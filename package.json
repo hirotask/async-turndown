@@ -1,5 +1,6 @@
 {
-  "name": "async-turndown",
+  "name": "@hirotask/async-turndown",
+  "private": false,
   "description": "A library that converts HTML to Markdown with async function",
   "version": "0.0.1",
   "authors": ["Dom Christie", "hirotask"],
@@ -49,5 +50,9 @@
     "build-test": "browserify test/turndown-test.js --outfile test/turndown-test.browser.js",
     "prepare": "npm run build",
     "test": "npm run build && npm run build-test && standard ./src/**/*.js && node test/internals-test.js && node test/turndown-test.js"
+  },
+  "publishConfig": {
+	"access": "restricted",
+	"registry": "https://npm.pkg.github.com/"
   }
 }
