@@ -24,8 +24,7 @@
     "browserify": "17.0.0",
     "rewire": "^6.0.0",
     "rollup": "2.52.3",
-    "standard": "^10.0.3",
-    "turndown-attendant": "0.0.3"
+    "standard": "^10.0.3"
   },
   "files": [
     "lib",
