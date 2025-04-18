@@ -3,6 +3,7 @@ import Rules from './rules'
 import { extend, trimLeadingNewlines, trimTrailingNewlines } from './utilities'
 import RootNode from './root-node'
 import Node from './node'
+var reduce = Array.prototype.reduce
 var escapes = [
   [/\\/g, '\\\\'],
   [/\*/g, '\\*'],
@@ -155,12 +156,11 @@ TurndownService.prototype = {
 
 async function process (parentNode) {
   var self = this
-  var result = ''
-  var len = parentNode.childNodes.length
-  var nodeIndex = 0
 
-  while (nodeIndex < len) {
-    var node = new Node(parentNode.childNodes[nodeIndex])
+  return reduce.call(parentNode.childNodes, async function (output, node) {
+    output = await output
+    node = await node
+    node = new Node(node, self.options)
 
     var replacement = ''
     if (node.nodeType === 3) {
@@ -169,12 +169,8 @@ async function process (parentNode) {
       replacement = await replacementForNode.call(self, node)
     }
 
-    result = join(result, replacement)
-
-    nodeIndex++
-  }
-
-  return result
+    return join(output, replacement)
+  }, '')
 }
 
 /**
@@ -206,7 +202,7 @@ function postProcess (output) {
 
 async function replacementForNode (node) {
   var rule = this.rules.forNode(node)
-  var content = process.call(this, node)
+  var content = await process.call(this, node)
   var whitespace = node.flankingWhitespace
   if (whitespace.leading || whitespace.trailing) content = content.trim()
   var replacement = await rule.replacement(content, node, this.options)

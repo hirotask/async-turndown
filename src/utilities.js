@@ -16,11 +16,11 @@ export function trimLeadingNewlines (string) {
   return string.replace(/^\n*/, '')
 }
 
-export function trimTrailingNewlines (string) {
+export function trimTrailingNewlines (str) {
   // avoid match-at-end regexp bottleneck, see #370
-  var indexEnd = string.length
-  while (indexEnd > 0 && string[indexEnd - 1] === '\n') indexEnd--
-  return string.substring(0, indexEnd)
+  var indexEnd = str.length
+  while (indexEnd > 0 && str[indexEnd - 1] === '\n') indexEnd--
+  return str.substring(0, indexEnd)
 }
 
 export var blockElements = [
