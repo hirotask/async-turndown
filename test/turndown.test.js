@@ -109,4 +109,18 @@ test('#remove removes elements', async () => {
     await expect(turndownService.turndown(input)).resolves.toBe('')
 })
 
+test('#remove returns the TurndownService instance for chaining', () => {
+    expect(turndownService.remove(['del', 'ins'])).toEqual(turndownService)
+})
 
+test('remove elements are overridden by rules', async () => {
+	turndownService.remove('p')
+	await expect(turndownService.turndown('<p>Hello world</p>')).resolves.toBe('Hello world')
+})
+
+test('remove elements are overridden by keep', async () => {
+	turndownService.keep(['del', 'ins'])
+	turndownService.remove(['del', 'ins'])
+
+	await expect(turndownService.turndown('<p>Hello <del>world</del><ins>World</ins></p>')).resolves.toBe('Hello <del>world</del><ins>World</ins>')
+})
