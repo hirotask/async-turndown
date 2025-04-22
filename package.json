@@ -2,7 +2,7 @@
   "name": "@hirotask/async-turndown",
   "private": false,
   "description": "A library that converts HTML to Markdown with async function",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "authors": [
     "Dom Christie",
     "hirotask"
